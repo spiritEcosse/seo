@@ -1,0 +1,16 @@
+version: '3.5'
+
+services:
+    seo:
+        build: .
+        ports:
+            - "9999:9999"
+        volumes:
+            - ./:/app
+        networks:
+            - service
+        command: gunicorn app:create_app -w 8 -b 0.0.0.0:9999 --worker-class aiohttp.GunicornUVLoopWebWorker
+
+networks:
+  service:
+      name: service-network

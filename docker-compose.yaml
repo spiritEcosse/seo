@@ -1,0 +1,20 @@
+version: '3.5'
+
+services:
+    seo:
+        restart: on-failure
+        build: .
+        image: abua/seo:devel
+        ports:
+            - "9999:9999"
+        volumes:
+            - ./:/app
+            - ./.ipython:/root/.ipython
+        networks:
+            - service
+#        command: gunicorn app:create_app -w 10 -b 0.0.0.0:9999 --worker-class aiohttp.GunicornUVLoopWebWorker
+        command: python app.py
+
+networks:
+  service:
+      name: service-network
